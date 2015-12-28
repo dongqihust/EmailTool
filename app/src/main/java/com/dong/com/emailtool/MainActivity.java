@@ -29,12 +29,18 @@ public class MainActivity extends AppCompatActivity {
         mViewPage.setAdapter(pageAdapter);
         mTabLayou.setTabGravity(TabLayout.GRAVITY_FILL);
         mTabLayou.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayou.setupWithViewPager(mViewPage);
+
+        //如果是自定义view的TabLayout讲导致select样式失效
+       mTabLayou.setupWithViewPager(mViewPage);
+
         mTabLayou.setTabTextColors(Color.RED, Color.GREEN);
         for(int i=0;i<mTabLayou.getTabCount();i++){
             TabLayout.Tab tab = mTabLayou.getTabAt(i);
             tab.setCustomView(pageAdapter.getTabView(i));
         }
+        mViewPage.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayou));
+        mTabLayou.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPage));
+
 
 
     }
