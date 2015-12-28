@@ -1,9 +1,10 @@
 package com.dong.com.emailtool;
 
+import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.dong.com.emailtool.adapter.ListFragmentPageAdapter;
 
@@ -23,7 +24,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-        mViewPage.setAdapter(new ListFragmentPageAdapter(getSupportFragmentManager()));
+
+        ListFragmentPageAdapter pageAdapter = new ListFragmentPageAdapter(this, getSupportFragmentManager());
+        mViewPage.setAdapter(pageAdapter);
+        mTabLayou.setTabGravity(TabLayout.GRAVITY_FILL);
+        mTabLayou.setTabMode(TabLayout.MODE_FIXED);
         mTabLayou.setupWithViewPager(mViewPage);
+        mTabLayou.setTabTextColors(Color.RED, Color.GREEN);
+        for(int i=0;i<mTabLayou.getTabCount();i++){
+            TabLayout.Tab tab = mTabLayou.getTabAt(i);
+            tab.setCustomView(pageAdapter.getTabView(i));
+        }
+
+
     }
 }
